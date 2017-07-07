@@ -1,0 +1,41 @@
+Negada esses foram os passos q eu tive que fazer pra poder essa bagaça toda ficar funcionando aqui em casa.
+Lembrando que eu não sabia bem o que tava fazendo, então instalei muita coisa desnecessariamente, incuslive instalei o PyOpenGL e o Pygame pra python2 sem perceber.
+Porém, se vc's também não estiverem conseguindo, instalem tudo! Certeza que pega.
+
+
+==>>
+
+sudo apt-get install build-essentials
+sudo apt-get install cmake make g++ libx11-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxext-dev libxi-dev
+sudo apt-get install libxinerama1 libxinerama-dev
+sudo apt-get install libxcursor1 libxcursor-dev
+
+sudo apt-get install python-pip
+sudo -H pip install --upgrade pip
+sudo pip install -U setuptools
+sudo apt-get install python-dev
+sudo -H pip install PyOpenGL PyOpenGL_accelerate
+sudo apt-get install mercurial
+sudo -H pip install pygame
+sudo apt-get build-dep python-pygame
+
+sudo apt-get install python3-pip
+sudo -H pip3 install --upgrade pip
+sudo -H pip3 install -U setuptools
+sudo -H pip3 install PyOpenGL PyOpenGL_accelerate
+sudo apt-get install python3-dev
+	#sudo -H pip3 install pygmae #DEU MERDA!
+	#sudo -H pip3 install hg+http://bitbucket.org/pygame/pygame #DEU MERDA!
+baixei o source em: http://www.pygame.org/download.shtml
+vai na pasta de da:
+python3 setup.py build
+sudo python3 setup.py install
+sudo apt-get install python3-setuptools
+
+
+sudo apt-get install mercurial python3-dev python3-setuptools python3-numpy python3-opengl libav-tools libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libsdl1.2-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev libtiff5-dev libx11-6 libx11-dev fluid-soundfont-gm timgm6mb-soundfont xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cyrillic fontconfig fonts-freefont-ttf
+	#grab source
+hg clone https://bitbucket.org/pygame/pygame
+cd pygame
+python3 setup.py build
+sudo python3 setup.py install
