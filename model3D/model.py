@@ -45,6 +45,8 @@ class Model:
 		auxs = []
 		for count in range(0, self.edg_qtd):
 			line = co_file.readline()
+			if(conf.settings["isply"] == True):
+					line = line[line.find(" ")+1:]
 			n1 = line.find(" ")
 			x = int(line[:n1]) - 1
 			n2 = n1 + line[n1+1:].find(" ") + 1
