@@ -52,5 +52,4 @@ class Camera:
 		cc_file.close()
 
 	def draw(self):
-		print(self.pos[0], self.pos[1], self.pos[2])
 		glTranslatef(self.pos[0], self.pos[1], self.pos[2])

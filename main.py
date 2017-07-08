@@ -39,7 +39,7 @@ def main():
 	pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
 	gluPerspective(45, (display[0]/display[1]), 0.1, -3000)
 	cam.draw()
-	glRotatef(-30, 1, 0, 0)
+	# glRotatef(-90, 1, 1, 0)
 	# glRotatef(25, 0, 0, 1)
 
 	#main loop
