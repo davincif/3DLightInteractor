@@ -21,12 +21,14 @@ def version_check():
 		print("Quiting...\n")
 		exit()
 
-	print("version checked")
+	print("version checked >> Python "
+		+ str(sys.version_info[0]) + "."
+		+ str(sys.version_info[1]) + "."
+		+ str(sys.version_info[2]) + "\n")
 
 def main():
 	#set section
 	version_check()
-	print("\n")
 
 	model = Model()
 	cam = Camera()
@@ -35,7 +37,10 @@ def main():
 	pygame.init()
 	display = (800, 600)
 	pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-	gluPerspective(45, (display[0]/display[1]), 0.1, 800)
+	gluPerspective(45, (display[0]/display[1]), 0.1, -3000)
+	glTranslatef(-800, 0, -2300)
+	glRotatef(-90, 1, 1, 0)
+	glRotatef(25, 0, 0, 1)
 	cam.draw()
 
 	#main loop
@@ -45,7 +50,7 @@ def main():
 				pygame.quit()
 				quit()
 
-		glRotatef(1, 3, 1, 1)
+		# glRotatef(1, 3, 1, 1)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		model.draw()
 		# pygame.display.update() #it seems have problems
