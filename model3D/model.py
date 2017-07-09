@@ -51,9 +51,3 @@ class Model:
 
 		print("loaded\n")
 		co_file.close()
-
-	def draw(self):
-	###
-	# draw the model in the OpenGL
-	###
-		pass

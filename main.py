@@ -33,17 +33,15 @@ def main():
 	version_check()
 	conf.init()
 
+	#game init section
+	pygame.init()
+	
 	#main variables crate
 	model = Model()
 	cam = Camera(model)
+	cam.set(800, 600)
+	cam.draw()
 
-	#game init section
-	pygame.init()
-	display = (800, 600)
-	screen = pygame.display.set_mode(display)
-
-	xx = 1
-	yy = 1
 	#main loop
 	while True:
 		for event in pygame.event.get():
@@ -51,12 +49,9 @@ def main():
 				pygame.quit()
 				quit()
 
-		xx += 1
-		yy += 1
-		screen.set_at((xx, yy), Color(255, 255, 255, 0))
 		# pygame.display.update() #it seems have problems
 		pygame.display.flip()
-		pygame.time.wait(10)
+		# pygame.time.wait(10)
 
 
 

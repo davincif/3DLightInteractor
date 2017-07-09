@@ -1,3 +1,7 @@
+#external libraries imports
+import pygame
+from pygame.locals import *
+
 #internal packege imports
 from model3D import Model
 
@@ -13,6 +17,8 @@ class Camera:
 	d = None #d
 	h = None #(hx, hy)
 	mdl = None #the model3D to be printed
+	display = None #pygame display
+	screen = None #pygame surface
 
 	def __init__(self, model):
 		self.mdl = model
@@ -55,9 +61,13 @@ class Camera:
 		print("loaded\n")
 		cc_file.close()
 
+	def set(self, width, height):
+		self.display = (800, 600)
+		self.screen = pygame.display.set_mode(self.display)
+
 	def draw(self):
 		#printing edges
 		if conf.settings["edges"]:
-			for triangle in model.surfaces:
-				for point in triangle:
-					pass
+			for triangle in self.mdl.surfaces:
+				for vertex in triangle:
+					self.screen.set_at((int(self.mdl.vertices[vertex].x), int(self.mdl.vertices[vertex].y)), Color(255, 255, 255, 0))
