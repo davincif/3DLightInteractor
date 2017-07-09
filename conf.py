@@ -1,31 +1,54 @@
 #definitos pela monitoria
-camera = "camera.cfg"
-illumination = "iluminacao.txt"
-objects = "objeto.byu"
+global camera
+global illumination
+global objects
 
 #adicionados por mim
-show = "settings"
-settings = {}
+global show
+global settled
+global settings
 
-prepath = "entry_files/"
+settled = False
 
-camera = prepath + camera
-illumination = prepath + illumination
-objects = prepath + objects
-show = prepath + show
+def init():
+	print("making settings...")
 
-#read and set settings
-print("loading settings...")
-set_fiel = open(show, "r")
-lines = set_fiel.readlines()
+	#using globals
+	global camera
+	global illumination
+	global objects
+	global settled
+	global show
+	global settings
 
-for line in lines:
-	line = line.rstrip().replace(" ", "")
-	n = line.find("=")
-	command = line[:n]
-	status = line[n+1:]
-	settings[command] = status.lower() == "true"
+	camera = "camera.cfg"
+	illumination = "iluminacao.txt"
+	objects = "objeto.byu"
+	show = "settings"
+	settings = {}
 
-print("\t", settings)
-print("loaded\n")
-set_fiel.close()
+	prepath = "entry_files/"
+
+	camera = prepath + camera
+	illumination = prepath + illumination
+	objects = prepath + objects
+	show = prepath + show
+
+	#read and set settings
+	print("\tloading settings...")
+	set_fiel = open(show, "r")
+	lines = set_fiel.readlines()
+
+	for line in lines:
+		line = line.rstrip().replace(" ", "")
+		n = line.find("=")
+		command = line[:n]
+		status = line[n+1:]
+		settings[command] = status.lower() == "true"
+
+	print("\t\t", settings)
+	print("\tloaded\n")
+	set_fiel.close()
+
+	settled = True
+	print("made")

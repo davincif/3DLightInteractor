@@ -8,6 +8,7 @@ from pygame.locals import *
 #application internal imports
 from model3D import Model
 from model3D import Camera
+import conf
 
 def version_check():
 	#version checking
@@ -30,7 +31,9 @@ def version_check():
 def main():
 	#set section
 	version_check()
+	conf.init()
 
+	#main variables crate
 	model = Model()
 	cam = Camera(model)
 
