@@ -80,8 +80,11 @@ class Camera:
 		#v2 = self.v_V
 		#u2 = self.v_U
 		u1 = self.v_V
-		self.v_V = (self.v_V - self.v_N.projection(self.v_V)).normalize()
+		self.v_V = self.v_V - self.v_N.projection(self.v_V)
+		self.v_V.normalize()
 		self.v_U = self.v_N.crossProd(self.v_V)
+		self.v_U.normalize()
+		self.v_N.normalize()
 
 	def draw(self):
 		#printing edges
@@ -93,10 +96,10 @@ class Camera:
 	#debugging methods
 	def print(self):
 		print("Camera:")
-		print("\tposition at" + str(self.pos))
-		print("\tvector N " + str(self.v_N))
-		print("\tvector V " + str(self.v_V))
-		print("\tvector U " + str(self.v_U))
+		print("\tposition at: " + str(self.pos))
+		print("\tvector N: " + str(self.v_N))
+		print("\tvector V: " + str(self.v_V))
+		print("\tvector U: " + str(self.v_U))
 		print("\td " + str(self.d))
 		print("\th " + str(self.h))
 		print("\thas a model? " + str(self.mdl is not None))

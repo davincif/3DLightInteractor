@@ -66,7 +66,10 @@ class Vector:
 		return math.sqrt(self.x**2 + self.y**2 + self.z**2)
 
 	def normalize(self):
-		return self / self.module()
+		auxv = self / self.module()
+		self.x = auxv.x
+		self.y = auxv.y
+		self.z = auxv.z
 
 	def dotProd(self, other):
 	###
