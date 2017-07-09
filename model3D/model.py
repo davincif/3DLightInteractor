@@ -1,6 +1,3 @@
-from OpenGL.GL import *
-from OpenGL.GLU import *
-
 from algebra import Point
 import conf
 
@@ -75,19 +72,4 @@ class Model:
 	###
 	# draw the model in the OpenGL
 	###
-		if(conf.settings["surfaces"] == True):
-			glBegin(GL_QUADS)
-			for surface in self.surfaces:
-				x = 0
-				for vertex in surface:
-					x += 1
-					glColor3fv((104/255, 200/255, 1))
-					glVertex3fv(self.vertices[vertex])
-			glEnd()
-
-		if(conf.settings["edges"] == True):
-			glBegin(GL_LINE_LOOP)
-			for edge in self.edges:
-				for vertex in edge:
-					glVertex3fv(self.vertices[vertex])
-			glEnd()
+		pass

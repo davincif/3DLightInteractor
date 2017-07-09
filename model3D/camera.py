@@ -1,9 +1,6 @@
 from algebra import Vector
 import conf
 
-from OpenGL.GL import *
-from OpenGL.GLU import *
-
 class Camera:
 	pos = None #posotion = (x, y, z)
 	v_N = None #Vector N = Vector(x, y, z)
@@ -52,4 +49,4 @@ class Camera:
 		cc_file.close()
 
 	def draw(self):
-		glTranslatef(self.pos[0], self.pos[1], self.pos[2])
+		pass
