@@ -1,8 +1,11 @@
+#standard python imports
 import sys
 
+#external libraries imports
 import pygame
 from pygame.locals import *
 
+#application internal imports
 from model3D import Model
 from model3D import Camera
 
@@ -29,7 +32,7 @@ def main():
 	version_check()
 
 	model = Model()
-	cam = Camera()
+	cam = Camera(model)
 
 	#game init section
 	pygame.init()

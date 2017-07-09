@@ -1,3 +1,4 @@
+#application internal imports
 from algebra import Point
 import conf
 
@@ -27,7 +28,7 @@ class Model:
 			n1 = line.find(" ")
 			x = float(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			auxl.append( (x, float(line[n1:n2]), float(line[n2+1:])) )
+			auxl.append( Point(x, float(line[n1:n2]), float(line[n2+1:])) )
 		self.vertices = tuple(auxl)
 		print("\t" + str(self.vtc_qtd) + " vertices loaded")
 
