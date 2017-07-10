@@ -33,12 +33,12 @@ def main():
 	conf.init()
 	print("\n")
 
-	#game init section
-	pygame.init()
-	
 	#main variables crate
 	world = World(win_size=(800, 600))
 	world.world_to_camera_coord()
+
+	#game init section
+	pygame.init()
 
 	#main loop
 	while True:
