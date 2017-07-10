@@ -16,6 +16,13 @@ class Point:
 	def __str__(self):
 		return "p (" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ")"
 
+	def __sub__(self, other):
+		if isinstance(other, Point):
+			return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
+		else:
+			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+
+
 class ObjPoint(Point):
 	N = None #Normal (yes, a Vector)
 
@@ -25,6 +32,7 @@ class ObjPoint(Point):
 
 	def __str__(self):
 		return "op [(" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ") " + str(self.N) + "]"
+
 		
 class Vector:
 	x = 0
@@ -69,6 +77,11 @@ class Vector:
 			return Vector(self.x**other, self.y**other, self.z**other)
 		else:
 			raise Exception("cannot pow " + str(type(self)) + " by " + str(type(other)) + ".")
+
+	def __neg__(self):
+		self.x = -self.x
+		self.y = -self.y
+		self.z = -self.z
 
 	#commum methods
 	def module(self):

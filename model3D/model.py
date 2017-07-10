@@ -3,9 +3,9 @@ from algebra import ObjPoint
 import conf
 
 class Model:
-	vertices = None #ObjPoint(x, y, z, N) - N = triangle normal
+	vertices = [] #ObjPoint(x, y, z, N) - N = point normal
 	vtc_qtd = 0
-	surfaces = None #((vertex1), (vertex2), (vertex3))
+	surfaces = [] #((vertex1), (vertex2), (vertex3), N(x, y, z)) #N = triangle normal wich is a vector
 	sfc_qtd = 0
 
 	def __init__(self):
@@ -19,23 +19,18 @@ class Model:
 		self.vtc_qtd = int(line[:n])
 		self.sfc_qtd = int(line[n+1:])
 
-
 		#get points
 		print("\tloading points...")
-		auxl = []
 		for count in range(0, self.vtc_qtd):
 			line = co_file.readline()
 			n1 = line.find(" ")
 			x = float(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			auxl.append( ObjPoint(x, float(line[n1:n2]), float(line[n2+1:])) )
-		self.vertices = tuple(auxl)
+			self.vertices.append( ObjPoint(x, float(line[n1:n2]), float(line[n2+1:])) )
 		print("\t" + str(self.vtc_qtd) + " vertices loaded")
-
 
 		#get triangles
 		print("\n\tloading triangles...")
-		auxl = []
 		for count in range(0, self.sfc_qtd):
 			line = co_file.readline()
 			if(conf.settings["isply"] == True):
@@ -43,14 +38,24 @@ class Model:
 			n1 = line.find(" ")
 			x = int(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			auxl.append( (x, int(line[n1:n2]), int(line[n2+1:])) )
-
-		self.surfaces = tuple(auxl)
-
+			self.surfaces.append( [x, int(line[n1:n2]), int(line[n2+1:]), None] )
 		print("\t" + str(self.sfc_qtd) + " surfaces loaded")
 
 		print("loaded\n")
 		co_file.close()
+
+		self.calc_triangles_normal()
+
+	def calc_triangles_normal(self):
+	###
+	# calculate the normals of all triangles, but do not guarantee that
+	# they will be all pointing in or out of the curve
+	###
+		print("calculating triangles' normal...")
+		for triangle in self.surfaces:
+			triangle[3] = (self.vertices[triangle[0]]-self.vertices[triangle[1]]).crossProd(self.vertices[triangle[2]]-self.vertices[triangle[1]])
+			triangle[3].normalize()
+		print("calculated\n")
 
 	def change_base(self, v1, v2, v3):
 	###
