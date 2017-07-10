@@ -47,8 +47,8 @@ def init():
 		settings[command] = status.lower() == "true"
 
 	print("\t\t", settings)
-	print("\tloaded\n")
+	print("\tloaded")
 	set_fiel.close()
 
 	settled = True
-	print("made")
+	print("made\n")
