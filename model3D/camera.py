@@ -72,8 +72,7 @@ class Camera:
 	def orthogonalize(self):
 		###
 		# find a v_U orthogonal to v_V and v_N
-		#see in: https://www.khanacademy.org/math/linear-algebra/alternate-bases/change-of-basis/v/linear-algebra-change-of-basis-matrix
-		#and in: http://ccsubs.com/video/yt%3ArHonltF77zI/the-gram-schmidt-process-alternate-coordinate-systems-bases-linear-algebra-khan-academy/subtitles
+		# see in: http://planetmath.org/exampleofgramschmidtorthogonalization
 		###
 
 		#v1 = self.v_N
