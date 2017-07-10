@@ -1,5 +1,4 @@
 #standard python imports
-import sys
 import numbers
 import math
 
