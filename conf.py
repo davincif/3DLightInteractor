@@ -40,7 +40,7 @@ def init():
 	lines = set_fiel.readlines()
 
 	for line in lines:
-		line = line.rstrip().replace(" ", "")
+		line = line.strip().replace(" ", "")
 		n = line.find("=")
 		command = line[:n]
 		status = line[n+1:]
