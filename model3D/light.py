@@ -18,6 +18,16 @@ class Light(object):
 		self.Il = Il
 		self.n = n
 
+	#commum methods
+	def change_base(self, v1, v2, v3):
+	###
+	# change the light's coordinate from world coord. to the camera coord.
+	# see in: https://www.khanacademy.org/math/linear-algebra/alternate-bases/change-of-basis/v/linear-algebra-change-of-basis-matrix
+	###
+		self.lp.x = self.lp.x*v1.x + self.lp.y*v2.x + self.lp.z*v3.x
+		self.lp.y = self.lp.x*v1.y + self.lp.y*v2.y + self.lp.z*v3.y
+		self.lp.z = self.lp.x*v1.z + self.lp.y*v2.z + self.lp.z*v3.z
+
 	#debugging methods
 	def print(self):
 		print("Light:")

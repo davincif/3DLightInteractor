@@ -37,6 +37,7 @@ def main():
 	
 	#main variables crate
 	world = World(win_size=(800, 600))
+	world.world_to_camera_coord()
 
 	#main loop
 	while True:

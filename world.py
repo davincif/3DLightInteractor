@@ -21,6 +21,13 @@ class World(object):
 		self.lp_qtd = len(self.lpl)
 		self.cam.set(self.win_size[0], self.win_size[1])
 
+	#commum methods
+	def world_to_camera_coord(self):
+		# self.model.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
+
+		for light in self.lpl:
+			light.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
+
 	#Internal use only methods
 	def __load_lights(self):
 		#load informations from file
