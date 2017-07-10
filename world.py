@@ -23,10 +23,18 @@ class World(object):
 
 	#commum methods
 	def world_to_camera_coord(self):
-		# self.model.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
+		print("change base to camera's coordinate...")
 
+		print("\tchanging model's points")
+		self.model.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
+		for p in self.model.vertices:
+			print(p)
+
+		print("\tchanging light's positions")
 		for light in self.lpl:
 			light.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
+
+		print("done\n")
 
 	#Internal use only methods
 	def __load_lights(self):

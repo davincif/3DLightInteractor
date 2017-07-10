@@ -51,3 +51,13 @@ class Model:
 
 		print("loaded\n")
 		co_file.close()
+
+	def change_base(self, v1, v2, v3):
+	###
+	# change the light's coordinate from world coord. to the camera coord.
+	# see in: https://www.khanacademy.org/math/linear-algebra/alternate-bases/change-of-basis/v/linear-algebra-change-of-basis-matrix
+	###
+		for vertex in self.vertices:
+			vertex.x = vertex.x*v1.x + vertex.y*v2.x + vertex.z*v3.x
+			vertex.y = vertex.x*v1.y + vertex.y*v2.y + vertex.z*v3.y
+			vertex.z = vertex.x*v1.z + vertex.y*v2.z + vertex.z*v3.z

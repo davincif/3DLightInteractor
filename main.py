@@ -31,6 +31,7 @@ def main():
 	#set section
 	version_check()
 	conf.init()
+	print("\n")
 
 	#game init section
 	pygame.init()
