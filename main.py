@@ -8,6 +8,7 @@ from pygame.locals import *
 #application internal imports
 from model3D import Model
 from model3D import Camera
+from model3D import Light
 import conf
 
 def version_check():
@@ -39,6 +40,7 @@ def main():
 	#main variables crate
 	model = Model()
 	cam = Camera(model)
+	lp = Light() #light point
 	cam.set(800, 600)
 	cam.draw()
 
