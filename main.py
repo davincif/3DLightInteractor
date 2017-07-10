@@ -6,9 +6,7 @@ import pygame
 from pygame.locals import *
 
 #application internal imports
-from model3D import Model
-from model3D import Camera
-from model3D import Light
+from world import World
 import conf
 
 def version_check():
@@ -38,11 +36,7 @@ def main():
 	pygame.init()
 	
 	#main variables crate
-	model = Model()
-	cam = Camera(model)
-	lp = Light() #light point
-	cam.set(800, 600)
-	cam.draw()
+	world = World(win_size=(800, 600))
 
 	#main loop
 	while True:
