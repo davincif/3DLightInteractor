@@ -27,8 +27,6 @@ class World(object):
 
 		print("\tchanging model's points")
 		self.model.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
-		for p in self.model.vertices:
-			print(p)
 
 		print("\tchanging light's positions")
 		for light in self.lpl:

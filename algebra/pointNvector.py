@@ -16,7 +16,16 @@ class Point:
 	def __str__(self):
 		return "p (" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ")"
 
+class ObjPoint(Point):
+	N = None #Normal (yes, a Vector)
 
+	def __init__(self, x, y, z):
+		super(ObjPoint, self).__init__(x, y, z)
+		self.N = Vector(0, 0, 0)
+
+	def __str__(self):
+		return "op [(" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ") " + str(self.N) + "]"
+		
 class Vector:
 	x = 0
 	y = 0

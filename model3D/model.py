@@ -1,11 +1,11 @@
 #application internal imports
-from algebra import Point
+from algebra import ObjPoint
 import conf
 
 class Model:
-	vertices = None #(x, y, z)
+	vertices = None #ObjPoint(x, y, z, N) - N = triangle normal
 	vtc_qtd = 0
-	surfaces = None #((v1), (v2), (v3))
+	surfaces = None #((vertex1), (vertex2), (vertex3))
 	sfc_qtd = 0
 
 	def __init__(self):
@@ -28,7 +28,7 @@ class Model:
 			n1 = line.find(" ")
 			x = float(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			auxl.append( Point(x, float(line[n1:n2]), float(line[n2+1:])) )
+			auxl.append( ObjPoint(x, float(line[n1:n2]), float(line[n2+1:])) )
 		self.vertices = tuple(auxl)
 		print("\t" + str(self.vtc_qtd) + " vertices loaded")
 
