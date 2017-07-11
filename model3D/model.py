@@ -1,4 +1,5 @@
 #application internal imports
+from algebra import Point2D
 from algebra import ObjPoint
 import conf
 
@@ -7,6 +8,7 @@ class Model:
 	vtc_qtd = 0
 	surfaces = [] #((vertex1), (vertex2), (vertex3), N(x, y, z)) #N = triangle normal wich is a vector
 	sfc_qtd = 0
+	vertices2D = []
 
 	def __init__(self):
 		#load informations from file
@@ -66,3 +68,14 @@ class Model:
 			vertex.x = vertex.x*v1.x + vertex.y*v2.x + vertex.z*v3.x
 			vertex.y = vertex.x*v1.y + vertex.y*v2.y + vertex.z*v3.y
 			vertex.z = vertex.x*v1.z + vertex.y*v2.z + vertex.z*v3.z
+
+	def calc_screen_projection(self, camera):
+	###
+	# project the 3D points the in screen, considering that they aready had their
+	# base changed from the world's coordinate to the camera's one
+	###
+		dohx = camera.d / camera.h[0] #d over hx
+		dohy = camera.d / camera.h[1] #d over hy
+		for vertex in self.vertices:
+			self.vertices2D.append(Point2D(dohx * (vertex.x / vertex.z), dohy * (vertex.y / vertex.z)))
+			print(self.vertices2D[len(self.vertices2D) -1])

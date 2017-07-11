@@ -36,9 +36,12 @@ def main():
 	#main variables crate
 	world = World(win_size=(800, 600))
 	world.world_to_camera_coord()
+	world.project()
 
 	#game init section
 	pygame.init()
+
+	world.draw()
 
 	#main loop
 	while True:

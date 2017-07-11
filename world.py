@@ -93,6 +93,20 @@ class World(object):
 
 		return lights
 
+	def project(self):
+	###
+	# preapare the world to be drawn
+	###
+		print("Porjecting")
+		self.model.calc_screen_projection(self.cam)
+
+	def draw(self):
+	###
+	# onde the model, camera and lights are loaded and set, the normals
+	# are set, the 3Dpoints are projected into 2D. Draw the world.
+	###
+		pass
+
 	#debugging methods
 	def print(self):
 		pass
