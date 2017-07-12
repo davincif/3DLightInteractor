@@ -40,7 +40,10 @@ class Model:
 			n1 = line.find(" ")
 			x = int(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			self.surfaces.append( [x, int(line[n1:n2]), int(line[n2+1:]), None] )
+			if(conf.settings["isply"] == True):
+				self.surfaces.append( [x, int(line[n1:n2]), int(line[n2+1:]), None] )
+			else:
+				self.surfaces.append( [x - 1, int(line[n1:n2]) - 1, int(line[n2+1:]) - 1, None] )
 		print("\t" + str(self.sfc_qtd) + " surfaces loaded")
 
 		print("loaded\n")
