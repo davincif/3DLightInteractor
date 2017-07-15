@@ -18,7 +18,7 @@ class Camera:
 	d = None #d
 	h = None #(hx, hy)
 	mdl = None #the model3D to be printed
-	display = None #pygame display
+	display = None #pygame display (width, height)
 	screen = None #pygame surface
 
 	def __init__(self, model):
