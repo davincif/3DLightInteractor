@@ -79,6 +79,12 @@ class Model:
 	###
 		dohx = camera.d / camera.h[0] #d over hx
 		dohy = camera.d / camera.h[1] #d over hy
+		count = 0
 		for vertex in self.vertices:
+			# a linha abaixo gera os pontos 2D parametrizados no intervalo [-1, 1]:
 			self.vertices2D.append(Point2D(dohx * (vertex.x / vertex.z), dohy * (vertex.y / vertex.z)))
-			print(self.vertices2D[len(self.vertices2D) -1])
+			# em seguida parametrizamos os pontos para as dimensões da janela (intervalos [0, width] e [0, height]) ,
+			# transformando tudo em inteiro, podendo descartar os pontos gerados no intervalo [-1, 1].
+			self.vertices2D[count].x = (int)((self.vertices2D[count].x + 1) * camera.display[0] / 2)
+			self.vertices2D[count].y = (int)((1 - self.vertices2D[count].y) * camera.display[1] / 2) 
+			count += 1

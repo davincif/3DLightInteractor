@@ -97,8 +97,9 @@ class World(object):
 	###
 	# preapare the world to be drawn
 	###
-		print("Porjecting")
+		print("Projecting 3D points into 2D...")
 		self.model.calc_screen_projection(self.cam)
+		print("done")
 
 	def draw(self):
 	###
