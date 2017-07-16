@@ -102,7 +102,7 @@ class Camera:
 			p1 = self.mdl.vertices2D[triangle[1]]
 			p2 = self.mdl.vertices2D[triangle[2]]
 			t = 0
-			while t <= 1: 
+			while t <= 1:
 				tp0 = t*p0
 				pa = tp0 + (1 - t)*p1 #baricentric
 				pb = tp0 + (1 - t)*p2
@@ -112,6 +112,14 @@ class Camera:
 					self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
 					s += 0.05
 				t += 0.05
+
+	def normalPointInversion (pos3D, N):
+	  V = [-pos3D[0], -pos3D[1], -pos3D[2]]
+	  aux = V[0] * N[0] + V[1] * N[1] + V[2] * N[2]
+	  if (aux < 0):
+	    return [-N[0], -N[1], -N[2]]
+	  else
+	    return N
 
 	#debugging methods
 	def print(self):
