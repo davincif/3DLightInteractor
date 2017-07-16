@@ -18,7 +18,25 @@ class Point2D:
 			return Vector2D(self.x - other.x, self.y - other.y)
 		else:
 			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
-		
+
+	def __add__(self, other):
+		if isinstance(other, Point2D):
+			return Point2D(self.x + other.x, self.y + other.y)
+		else:
+			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+
+	def __radd__(self, other):
+		return self.__mul__(other)
+
+	def __mul__(self, other):
+		if isinstance(other, numbers.Number):
+			return Point2D(self.x * other, self.y * other)
+		else:
+			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+
+	def __rmul__(self, other):
+		return self.__mul__(other)
+
 class Vector2D:
 	x = 0
 	y = 0
@@ -39,6 +57,15 @@ class Vector2D:
 
 	def __rsub__(self, other):
 		return self.__sub__(other)
+
+	def __add__(self, other):
+		if type(other) is Vector2D:
+			return Vector2D(self.x + other.x, self.y + other.y)
+		else:
+			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
+
+	def __radd__(self, other):
+		return self.__add__(other)
 
 	def __mul__(self, other):
 		if isinstance(other, numbers.Number):

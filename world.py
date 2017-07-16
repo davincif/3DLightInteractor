@@ -21,19 +21,6 @@ class World():
 		self.cam = Camera(self.model, self.lpl)
 		self.cam.set(self.win_size[0], self.win_size[1])
 
-	#commum methods
-	def world_to_camera_coord(self):
-		print("change base to camera's coordinate...")
-
-		print("\tchanging model's points")
-		self.model.change_base(self.cam)
-
-		print("\tchanging light's positions")
-		for light in self.lpl:
-			light.change_base(self.cam)
-
-		print("done\n")
-
 	#Internal use only methods
 	def __load_lights(self):
 		#load informations from file
@@ -93,6 +80,19 @@ class World():
 
 		return lights
 
+	#commum methods
+	def world_to_camera_coord(self):
+		print("change base to camera's coordinate...")
+
+		print("\tchanging model's points")
+		self.model.change_base(self.cam)
+
+		print("\tchanging light's positions")
+		for light in self.lpl:
+			light.change_base(self.cam)
+
+		print("done\n")
+
 	def project(self):
 	###
 	# preapare the world to be drawn
@@ -106,6 +106,8 @@ class World():
 	# onde the model, camera and lights are loaded and set, the normals
 	# are set, the 3Dpoints are projected into 2D. Draw the world.
 	###
+		self.cam.rasterization()
+
 		if conf.settings["vertex"]:
 			self.cam.draw_vertex()
 

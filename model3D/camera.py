@@ -7,6 +7,7 @@ from pygame.locals import *
 # from model3D import Light
 
 #application internal imports
+import algebra.pointNvector2D
 from algebra import Vector
 from algebra import Point
 import conf
@@ -68,6 +69,8 @@ class Camera:
 		#create camera canonical base
 		self.orthogonalize()
 
+
+	#commum methods
 	def set(self, width, height):
 		self.display = (800, 600)
 		self.screen = pygame.display.set_mode(self.display)
@@ -92,6 +95,23 @@ class Camera:
 		#printing the points of the object
 		for point in self.mdl.vertices2D:
 			self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
+
+	def rasterization(self):
+		for triangle in self.mdl.surfaces:
+			p0 = self.mdl.vertices2D[triangle[0]]
+			p1 = self.mdl.vertices2D[triangle[1]]
+			p2 = self.mdl.vertices2D[triangle[2]]
+			t = 0
+			while t <= 1: 
+				tp0 = t*p0
+				pa = tp0 + (1 - t)*p1 #baricentric
+				pb = tp0 + (1 - t)*p2
+				s = 0
+				while s <= 1:
+					point = s*pa + (1 - s)*pb
+					self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
+					s += 0.05
+				t += 0.05
 
 	#debugging methods
 	def print(self):
