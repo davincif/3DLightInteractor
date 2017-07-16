@@ -49,9 +49,9 @@ class Model:
 		print("loaded\n")
 		co_file.close()
 
-		self.calc_triangles_normal()
+		self.calc_vertices_normal()
 
-	def calc_triangles_normal(self):
+	def calc_vertices_normal(self):
 	###
 	# calculate the normals of all triangles, but do not guarantee that
 	# they will be all pointing in or out of the curve
@@ -92,5 +92,5 @@ class Model:
 			# em seguida parametrizamos os pontos para as dimensões da janela (intervalos [0, width] e [0, height]) ,
 			# transformando tudo em inteiro, podendo descartar os pontos gerados no intervalo [-1, 1].
 			self.vertices2D[count].x = (int)((self.vertices2D[count].x + 1) * camera.display[0] / 2)
-			self.vertices2D[count].y = (int)((1 - self.vertices2D[count].y) * camera.display[1] / 2) 
+			self.vertices2D[count].y = (int)((1 - self.vertices2D[count].y) * camera.display[1] / 2)
 			count += 1
