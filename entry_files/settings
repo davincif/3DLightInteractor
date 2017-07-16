@@ -1,4 +1,4 @@
-edges = true
-surfaces = false
+edges = false
+surfaces = true
 vertex = false
 isply = false
