@@ -56,6 +56,15 @@ class Vector:
 	def __rsub__(self, other):
 		return self.__sub__(other)
 
+	def __add__(self, other):
+		if type(other) is Vector:
+			return Vector(self.x + other.x, self.y + other.y, self.z + other.z)
+		else:
+			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
+
+	def __radd__(self, other):
+		return self.__add__(other)
+
 	def __mul__(self, other):
 		if isinstance(other, numbers.Number):
 			return Vector(self.x * other, self.y * other, self.z * other)
