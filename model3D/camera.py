@@ -118,7 +118,7 @@ class Camera:
 	  aux = V[0] * N[0] + V[1] * N[1] + V[2] * N[2]
 	  if (aux < 0):
 	    return [-N[0], -N[1], -N[2]]
-	  else
+	  else:
 	    return N
 
 	#debugging methods
