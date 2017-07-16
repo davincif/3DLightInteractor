@@ -6,7 +6,7 @@ import conf
 class Model:
 	vertices = [] #ObjPoint(x, y, z, N) - N = point normal
 	vtc_qtd = 0
-	surfaces = [] #((vertex1), (vertex2), (vertex3), N(x, y, z)) #N = triangle normal wich is a vector
+	surfaces = [] #(vertex1), (vertex2), (vertex3)
 	sfc_qtd = 0
 	vertices2D = []
 
@@ -56,11 +56,17 @@ class Model:
 	# calculate the normals of all triangles, but do not guarantee that
 	# they will be all pointing in or out of the curve
 	###
-		print("calculating triangles' normal...")
+		print("calculating vertices' normal...")
 		for triangle in self.surfaces:
-			triangle[3] = (self.vertices[triangle[0]]-self.vertices[triangle[1]]).crossProd(self.vertices[triangle[2]]-self.vertices[triangle[1]])
-			triangle[3].normalize()
-		print("calculated\n")
+			self.vertices[triangle[0]].N = self.vertices[triangle[0]].N + (self.vertices[triangle[0]]-self.vertices[triangle[1]]).crossProd(self.vertices[triangle[0]]-self.vertices[triangle[2]])
+			self.vertices[triangle[1]].N = self.vertices[triangle[1]].N + (self.vertices[triangle[1]]-self.vertices[triangle[0]]).crossProd(self.vertices[triangle[1]]-self.vertices[triangle[2]])
+			self.vertices[triangle[2]].N = self.vertices[triangle[2]].N + (self.vertices[triangle[2]]-self.vertices[triangle[1]]).crossProd(self.vertices[triangle[2]]-self.vertices[triangle[0]])
+
+		print("normalizing...")
+		for point in self.vertices:
+			point.N.normalize()
+		print("done\n")
+
 
 	def change_base(self, camera):
 	###
