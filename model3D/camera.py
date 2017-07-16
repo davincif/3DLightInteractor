@@ -88,8 +88,8 @@ class Camera:
 		self.v_U.normalize()
 		self.v_N.normalize()
 
-	def draw(self):
-		#printing triangle vertices
+	def draw_vertex(self):
+		#printing the points of the object
 		for point in self.mdl.vertices2D:
 			self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
 

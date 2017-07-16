@@ -1,3 +1,4 @@
 edges = true
 surfaces = false
+vertex = false
 isply = false
