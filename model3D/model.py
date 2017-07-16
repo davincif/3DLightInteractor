@@ -62,15 +62,15 @@ class Model:
 			triangle[3].normalize()
 		print("calculated\n")
 
-	def change_base(self, v1, v2, v3):
+	def change_base(self, camera):
 	###
 	# change the light's coordinate from world coord. to the camera coord.
 	# see in: https://www.khanacademy.org/math/linear-algebra/alternate-bases/change-of-basis/v/linear-algebra-change-of-basis-matrix
 	###
 		for vertex in self.vertices:
-			vertex.x = vertex.x*v1.x + vertex.y*v2.x + vertex.z*v3.x
-			vertex.y = vertex.x*v1.y + vertex.y*v2.y + vertex.z*v3.y
-			vertex.z = vertex.x*v1.z + vertex.y*v2.z + vertex.z*v3.z
+			vertex.x = camera.v_U.x*(vertex.x - camera.pos.x) + camera.v_V.x*(vertex.y - camera.pos.y) + camera.v_N.x*(vertex.z - camera.pos.z)
+			vertex.y = camera.v_U.y*(vertex.x - camera.pos.x) + camera.v_V.y*(vertex.y - camera.pos.y) + camera.v_N.y*(vertex.z - camera.pos.z)
+			vertex.z = camera.v_U.z*(vertex.x - camera.pos.x) + camera.v_V.z*(vertex.y - camera.pos.y) + camera.v_N.z*(vertex.z - camera.pos.z)
 
 	def calc_screen_projection(self, camera):
 	###

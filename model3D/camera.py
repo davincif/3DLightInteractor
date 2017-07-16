@@ -3,7 +3,8 @@ import pygame
 from pygame.locals import *
 
 #internal packege imports
-from model3D import Model
+# from model3D import Model
+# from model3D import Light
 
 #application internal imports
 from algebra import Vector
@@ -18,11 +19,13 @@ class Camera:
 	d = None #d
 	h = None #(hx, hy)
 	mdl = None #the model3D to be printed
+	lights = None #a list of the lights presented on the cine
 	display = None #pygame display (width, height)
 	screen = None #pygame surface
 
-	def __init__(self, model):
+	def __init__(self, model, lights):
 		self.mdl = model
+		self.lights = lights
 
 		#load informations from file
 		cc_file = open(conf.camera, "r")
@@ -86,11 +89,9 @@ class Camera:
 		self.v_N.normalize()
 
 	def draw(self):
-		#printing edges
-		if conf.settings["edges"]:
-			for triangle in self.mdl.surfaces:
-				for vertex in triangle:
-					self.screen.set_at((int(self.mdl.vertices[vertex].x), int(self.mdl.vertices[vertex].y)), Color(255, 255, 255, 0))
+		#printing triangle vertices
+		for point in self.mdl.vertices2D:
+			self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
 
 	#debugging methods
 	def print(self):

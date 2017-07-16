@@ -1,12 +1,12 @@
 #application internal imports
 from algebra import Vector
 from algebra import Point
+from model3D.light import Light
 from model3D.model import Model
 from model3D.camera import Camera
-from model3D.light import Light
 import conf
 
-class World(object):
+class World():
 	model = None # 3D model to be loaded
 	cam = None # camera (thing that sees the world)
 	lpl = [] #light points list
@@ -16,9 +16,9 @@ class World(object):
 	def __init__(self, win_size):
 		self.win_size = win_size
 		self.model = Model()
-		self.cam = Camera(self.model)
 		self.lpl = self.__load_lights() #light point
 		self.lp_qtd = len(self.lpl)
+		self.cam = Camera(self.model, self.lpl)
 		self.cam.set(self.win_size[0], self.win_size[1])
 
 	#commum methods
@@ -26,11 +26,11 @@ class World(object):
 		print("change base to camera's coordinate...")
 
 		print("\tchanging model's points")
-		self.model.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
+		self.model.change_base(self.cam)
 
 		print("\tchanging light's positions")
 		for light in self.lpl:
-			light.change_base(self.cam.v_N, self.cam.v_V, self.cam.v_U)
+			light.change_base(self.cam.v_U, self.cam.v_V, self.cam.v_N)
 
 		print("done\n")
 
@@ -106,7 +106,7 @@ class World(object):
 	# onde the model, camera and lights are loaded and set, the normals
 	# are set, the 3Dpoints are projected into 2D. Draw the world.
 	###
-		pass
+		self.cam.draw()
 
 	#debugging methods
 	def print(self):

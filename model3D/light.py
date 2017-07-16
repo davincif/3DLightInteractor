@@ -1,4 +1,4 @@
-class Light(object):
+class Light():
 	lp = None	#light position Point(x, y, v)
 	ka = None	#ka - ambiental reflection
 	Ia = None	#Ia - Environmental color vector
