@@ -30,7 +30,7 @@ class World():
 
 		print("\tchanging light's positions")
 		for light in self.lpl:
-			light.change_base(self.cam.v_U, self.cam.v_V, self.cam.v_N)
+			light.change_base(self.cam)
 
 		print("done\n")
 
