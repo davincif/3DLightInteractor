@@ -31,49 +31,55 @@ class World():
 
 		lights = []
 
+		#ka loading
+		ka = float(cl_file.readline())
+
+		#Ia loading
 		line = cl_file.readline()
-		while line != "":
-			#loading light position (world coordinate)
+		n1 = line.find(" ")
+		x = float(line[:n1])
+		n2 = n1 + line[n1+1:].find(" ") + 1
+		Ia = Vector(x, float(line[n1:n2]), float(line[n2+1:]))
+
+		#kd loading
+		kd = float(cl_file.readline())
+
+		#Od loading
+		line = cl_file.readline()
+		n1 = line.find(" ")
+		x = float(line[:n1])
+		n2 = n1 + line[n1+1:].find(" ") + 1
+		Od = Vector(x, float(line[n1:n2]), float(line[n2+1:]))
+
+		#ks loading
+		ks = float(cl_file.readline())
+
+		#n loading
+		n = float(cl_file.readline())
+
+		# loading
+		light_count = float(cl_file.readline())
+
+		# intialize with empty
+        pos = []
+		Il = []
+
+		count = 0
+		while count < light_count:
+        	#loading light position (world coordinate)
 			n1 = line.find(" ")
 			x = float(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			pos = Point(x, float(line[n1:n2]), float(line[n2+1:]))
-
-			#ka loading
-			ka = float(cl_file.readline())
-
-			#Ia loading
-			line = cl_file.readline()
-			n1 = line.find(" ")
-			x = float(line[:n1])
-			n2 = n1 + line[n1+1:].find(" ") + 1
-			Ia = Vector(x, float(line[n1:n2]), float(line[n2+1:]))
-
-			#kd loading
-			kd = float(cl_file.readline())
-
-			#Od loading
-			line = cl_file.readline()
-			n1 = line.find(" ")
-			x = float(line[:n1])
-			n2 = n1 + line[n1+1:].find(" ") + 1
-			Od = Vector(x, float(line[n1:n2]), float(line[n2+1:]))
-
-			#ks loading
-			ks = float(cl_file.readline())
-
+			pos.append(Point(x, float(line[n1:n2]), float(line[n2+1:]))
 			#Il loading
 			line = cl_file.readline()
 			n1 = line.find(" ")
 			x = float(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			Il = Vector(x, float(line[n1:n2]), float(line[n2+1:]))
+			IlColors.append(Vector(x, float(line[n1:n2]), float(line[n2+1:])))
 
-			#n loading
-			n = float(cl_file.readline())
-
-			lights.append(Light(pos, ka, Ia, kd, Od, ks, Il, n))
-			line = cl_file.readline()
+		for i in range(0, light_count):
+            lights.append(Light(pos[i], ka, Ia, kd, Od, ks, Il[i], n))
 
 		print(str(len(lights)) + " light(s) loaded\n")
 		cl_file.close()
