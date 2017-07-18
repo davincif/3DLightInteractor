@@ -13,7 +13,6 @@ see file "passos" in the main directory
 
 All for python3:
 
-* [PyOpenGL](https://www.python.org/downloads/) for python3
 * [Pygame](https://www.pygame.org/news) 
 
 No need to say that you'll need [pip3](https://stackoverflow.com/questions/33906336/where-is-pip3-installing-modules) to install all those things right?
