@@ -117,9 +117,8 @@ class Camera:
 	  V = [-pos3D[0], -pos3D[1], -pos3D[2]]
 	  aux = V[0] * N[0] + V[1] * N[1] + V[2] * N[2]
 	  if (aux < 0):
-	    return [-N[0], -N[1], -N[2]]
-	  else
-	    return N
+		  return [-N[0], -N[1], -N[2]]
+	  return N
 
 	#debugging methods
 	def print(self):

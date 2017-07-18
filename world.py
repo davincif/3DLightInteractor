@@ -57,29 +57,31 @@ class World():
 		#n loading
 		n = float(cl_file.readline())
 
-		# loading
-		light_count = float(cl_file.readline())
+		# light_count
+		light_count = int(cl_file.readline())
 
 		# intialize with empty
-        pos = []
+		pos = []
 		Il = []
-
 		count = 0
+
 		while count < light_count:
-        	#loading light position (world coordinate)
+			#loading light position (world coordinate)
+			line = cl_file.readline()
 			n1 = line.find(" ")
 			x = float(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			pos.append(Point(x, float(line[n1:n2]), float(line[n2+1:]))
+			pos.append(Point(x,float(line[n1:n2]),float(line[n2+1:])))
 			#Il loading
 			line = cl_file.readline()
 			n1 = line.find(" ")
 			x = float(line[:n1])
 			n2 = n1 + line[n1+1:].find(" ") + 1
-			IlColors.append(Vector(x, float(line[n1:n2]), float(line[n2+1:])))
+			Il.append(Vector(x, float(line[n1:n2]), float(line[n2+1:])))
+			count = count + 1;
 
 		for i in range(0, light_count):
-            lights.append(Light(pos[i], ka, Ia, kd, Od, ks, Il[i], n))
+			lights.append(Light(pos[i], ka, Ia, kd, Od, ks, Il[i], n))
 
 		print(str(len(lights)) + " light(s) loaded\n")
 		cl_file.close()
