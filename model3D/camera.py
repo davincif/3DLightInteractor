@@ -138,9 +138,9 @@ class Camera:
 			return N
 
 	def triangleArea(self, v1, v2, v3):
-		a = math.sqrt((v1.x - v2.x)**2 + (v1.y - v2.y)**2)
-		b = math.sqrt((v2.x - v3.x)**2 + (v2.y - v3.y)**2)
-		c = math.sqrt((v1.x - v3.x)**2 + (v1.y - v3.y)**2)
+		a = math.hypot((v1.x - v2.x), (v1.y - v2.y))
+		b = math.hypot((v2.x - v3.x), (v2.y - v3.y))
+		c = math.hypot((v1.x - v3.x), (v1.y - v3.y))
 		S = (a+b+c)/2
 		A = abs(S - a)
 		B = abs(S - b)
