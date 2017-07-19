@@ -110,8 +110,8 @@ class Camera:
 				while s <= 1:
 					point = s*pa + (1 - s)*pb
 					self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
-					s += 0.05
-				t += 0.05
+					s += 0.1
+				t += 0.1
 
 	def normalPointInversion(pos3D, N):
 		aux = -pos3D.x * N.x + -pos3D.y * N.y + -pos3D.z * N.z
