@@ -113,13 +113,12 @@ class Camera:
 					s += 0.05
 				t += 0.05
 
-	def normalPointInversion (pos3D, N):
-	  V = [-pos3D[0], -pos3D[1], -pos3D[2]]
-	  aux = V[0] * N[0] + V[1] * N[1] + V[2] * N[2]
-	  if (aux < 0):
-	    return [-N[0], -N[1], -N[2]]
-	  else:
-	    return N
+	def normalPointInversion(pos3D, N):
+		aux = -pos3D.x * N.x + -pos3D.y * N.y + -pos3D.z * N.z
+		if (aux < 0):
+			return -N
+		else:
+			return N
 
 	#debugging methods
 	def print(self):
