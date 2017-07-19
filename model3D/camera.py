@@ -7,10 +7,13 @@ from pygame.locals import *
 # from model3D import Light
 
 #application internal imports
+import math
 import algebra.pointNvector2D
+from algebra.pointNvector import ObjPoint
 from algebra import Vector
 from algebra import Point
 import conf
+from model3D.zbuffer import ZBuffer
 
 class Camera:
 	pos = None #posotion = Point(x, y, z)
@@ -23,6 +26,7 @@ class Camera:
 	lights = None #a list of the lights presented on the cine
 	display = None #pygame display (width, height)
 	screen = None #pygame surface
+	zBuffer = None #zBuffer
 
 	def __init__(self, model, lights):
 		self.mdl = model
@@ -74,6 +78,7 @@ class Camera:
 	def set(self, width, height):
 		self.display = (800, 600)
 		self.screen = pygame.display.set_mode(self.display)
+		self.zBuffer = ZBuffer(800, 600)
 
 	def orthogonalize(self):
 		###
@@ -104,14 +109,26 @@ class Camera:
 			t = 0
 			while t <= 1:
 				tp0 = t*p0
-				pa = tp0 + (1 - t)*p1 #baricentric
+				pa = tp0 + (1 - t)*p1
 				pb = tp0 + (1 - t)*p2
 				s = 0
 				while s <= 1:
 					point = s*pa + (1 - s)*pb
-					self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
-					s += 0.05
-				t += 0.05
+
+					alpha, beta, gama = self.baricentrica(p0, p1, p2, point)
+
+					p03D = self.mdl.vertices[triangle[0]]
+					p13D = self.mdl.vertices[triangle[1]]
+					p23D = self.mdl.vertices[triangle[2]]
+					pointX = int((p03D.x + p13D.x + p23D.x) * alpha)
+					pointY = int((p03D.y + p13D.y + p23D.y) * beta)
+					pointZ = int((p03D.z + p13D.z + p23D.z) * gama)
+					point3D = ObjPoint(pointX, pointY, pointZ)
+					if(self.zBuffer.compare_and_set(int(point.x), int(point.y), point3D.z)):
+						self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
+
+					s += 0.1
+				t += 0.1
 
 	def normalPointInversion(pos3D, N):
 		aux = -pos3D.x * N.x + -pos3D.y * N.y + -pos3D.z * N.z
@@ -119,6 +136,27 @@ class Camera:
 			return -N
 		else:
 			return N
+
+	def triangleArea(self, v1, v2, v3):
+		a = math.sqrt((v1.x - v2.x)**2 + (v1.y - v2.y)**2)
+		b = math.sqrt((v2.x - v3.x)**2 + (v2.y - v3.y)**2)
+		c = math.sqrt((v1.x - v3.x)**2 + (v1.y - v3.y)**2)
+		S = (a+b+c)/2
+		A = abs(S - a)
+		B = abs(S - b)
+		C = abs(S - c)
+
+		return math.sqrt(S * A * B * C)
+
+	def baricentrica(self, P1, P2, P3, P):
+
+		value = self.triangleArea(P1, P2, P3)
+		if value == 0:
+			return P1.x / P.x, 0, 0
+		alpha = self.triangleArea(P, P2, P3) / value
+		beta = self.triangleArea(P1, P, P3) / value
+		gama = self.triangleArea(P1, P2, P) / value
+		return alpha, beta, gama
 
 	#debugging methods
 	def print(self):
