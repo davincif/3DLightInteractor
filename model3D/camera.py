@@ -98,18 +98,71 @@ class Camera:
 
 	def rasterization(self):
 		for triangle in self.mdl.surfaces:
-			p0 = self.mdl.vertices2D[triangle[0]]
-			p1 = self.mdl.vertices2D[triangle[1]]
-			p2 = self.mdl.vertices2D[triangle[2]]
+			#2D Points
+			p2d0 = self.mdl.vertices2D[triangle[0]]
+			p2d1 = self.mdl.vertices2D[triangle[1]]
+			p2d2 = self.mdl.vertices2D[triangle[2]]
+
+			#3D Points
+			p3d0 = self.mdl.vertices[triangle[0]]
+			p3d1 = self.mdl.vertices[triangle[1]]
+			p3d2 = self.mdl.vertices[triangle[2]]
+
+			#Normals
+			n0 = p3d0.N
+			n1 = p3d1.N
+			n2 = p3d2.N
+
 			t = 0
 			while t <= 1:
-				tp0 = t*p0
-				pa = tp0 + (1 - t)*p1 #baricentric
-				pb = tp0 + (1 - t)*p2
+				#2D Points
+				tp2d0 = t*p2d0
+				p2da = tp2d0 + (1 - t)*p2d1 #baricentric
+				p2db = tp2d0 + (1 - t)*p2d2
+
+				#3D Points
+				tp3d0 = t*p3d0
+				p3da = tp3d0 + (1 - t)*p3d1
+				p3db = tp3d0 + (1 - t)*p3d2
+
+				#Normals
+				tn0 = t*n0
+				na = tn0 + (1 - t)*n1
+				nb = tn0 + (1 - t)*n2
+
 				s = 0
 				while s <= 1:
-					point = s*pa + (1 - s)*pb
-					self.screen.set_at((int(point.x), int(point.y)), Color(255, 255, 255, 0))
+					point2d = s*p2da + (1 - s)*p2db
+					point3d = s*p3da + (1 - s)*p3db
+					point3d.N = s*na + (1 - s)*nb
+					point3d.N.normalize()
+
+					#geeting phong
+					vl = Vector(0, 0, 0) #vector light
+					for light in self.lights:
+						vl = vl + light.phong(point3d, self.pos)
+					vl = vl + self.lights[0].get_ambiental_color()
+
+					#light ceil
+					#R
+					if vl.x > 255:
+						vl.x = 255
+					elif vl.x < 0:
+						vl.x = 0
+
+					#G
+					if vl.y > 255:
+						vl.y = 255
+					elif vl.y < 0:
+						vl.y = 0
+
+					#B
+					if vl.z > 255:
+						vl.z = 255
+					elif vl.z < 0:
+						vl.z = 0
+
+					self.screen.set_at((int(point2d.x), int(point2d.y)), Color(int(vl.x), int(vl.y), int(vl.z), 0))
 					s += 0.1
 				t += 0.1
 

@@ -1,3 +1,6 @@
+#application internal imports
+from algebra import Vector
+
 class Light():
 	lp = None	#light position Point(x, y, v)
 	ka = None	#ka - ambiental reflection
@@ -27,6 +30,24 @@ class Light():
 		self.lp.x = camera.v_U.x*(self.lp.x - camera.pos.x) + camera.v_V.x*(self.lp.y - camera.pos.y) + camera.v_N.x*(self.lp.z - camera.pos.z)
 		self.lp.y = camera.v_U.y*(self.lp.x - camera.pos.x) + camera.v_V.y*(self.lp.y - camera.pos.y) + camera.v_N.y*(self.lp.z - camera.pos.z)
 		self.lp.z = camera.v_U.z*(self.lp.x - camera.pos.x) + camera.v_V.z*(self.lp.y - camera.pos.y) + camera.v_N.z*(self.lp.z - camera.pos.z)
+
+	def phong(self, point, campoint):
+	###
+	# receive a 3D point to mensure the light where point.N is the normal of the point
+	# and the camera position
+	# return a color Vector(R, G, B)
+	###
+		Ls = self.lp - point #The vector from the point toward the light source
+		Rm = (2 * point.N.dotProd(Ls) * point.N) - Ls #The direction that a perfectly reflected light ray takes when hits this point
+		Vd = Vector(-campoint.x, -campoint.y, -campoint.z)  #viewer direction,the vector from the point toward the camera
+		return point.N.dotProd(Vd) * self.kd * (self.Od*self.Il) + Rm.dotProd(Vd)**self.n * self.ks*self.Il
+
+
+	def get_ambiental_color(self):
+	###
+	# returns the ambiental portion of the light
+	###
+		return self.ka*self.Ia
 
 	#debugging methods
 	def print(self):
