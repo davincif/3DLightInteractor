@@ -1,5 +1,6 @@
 #standard python imports
 import sys
+import time
 
 #external libraries imports
 import pygame
@@ -28,6 +29,9 @@ def version_check():
 		+ str(sys.version_info[2]) + "\n")
 
 def main():
+	#setting time
+	startTime = time.time()
+
 	#set section
 	version_check()
 	conf.init()
@@ -42,6 +46,10 @@ def main():
 	pygame.init()
 
 	world.draw()
+
+	#time to render
+	endTime = time.time()
+	print("time to complete: " + str(endTime - startTime) + "s.")
 
 	#main loop
 	while True:
