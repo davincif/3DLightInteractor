@@ -114,11 +114,13 @@ class World():
 	# onde the model, camera and lights are loaded and set, the normals
 	# are set, the 3Dpoints are projected into 2D. Draw the world.
 	###
+		print("rendering...")
 		if conf.settings["surfaces"]:
 			self.cam.rasterization()
 
 		if conf.settings["vertex"]:
 			self.cam.draw_vertex()
+		print("done")
 
 	#debugging methods
 	def print(self):
