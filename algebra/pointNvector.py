@@ -21,6 +21,24 @@ class Point:
 		else:
 			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
 
+	def __add__(self, other):
+		if isinstance(other, Point):
+			return Point(self.x + other.x, self.y + other.y, self.z + other.z)
+		else:
+			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+
+	def __radd__(self, other):
+		return self.__mul__(other)
+
+	def __mul__(self, other):
+		if isinstance(other, numbers.Number):
+			return Point(self.x * other, self.y * other, self.z * other)
+		else:
+			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+
+	def __rmul__(self, other):
+		return self.__mul__(other)
+
 
 class ObjPoint(Point):
 	N = None #Normal (yes, a Vector)
@@ -50,6 +68,8 @@ class Vector:
 	def __sub__(self, other):
 		if type(other) is Vector:
 			return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
+		elif isinstance(other, numbers.Number):
+			return Vector(self.x - other, self.y - other, self.z - other)
 		else:
 			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
 
@@ -68,6 +88,8 @@ class Vector:
 	def __mul__(self, other):
 		if isinstance(other, numbers.Number):
 			return Vector(self.x * other, self.y * other, self.z * other)
+		elif type(other) is Vector:
+			return Vector(self.x * other.x, self.y * other.y, self.z * other.z)
 		else:
 			raise Exception("cannot multiply " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
 
