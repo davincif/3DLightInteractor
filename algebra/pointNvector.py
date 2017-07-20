@@ -50,7 +50,7 @@ class ObjPoint(Point):
 	def __str__(self):
 		return "op [(" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ") " + str(self.N) + "]"
 
-		
+
 class Vector:
 	x = 0
 	y = 0

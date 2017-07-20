@@ -7,10 +7,13 @@ from pygame.locals import *
 # from model3D import Light
 
 #application internal imports
+import math
 import algebra.pointNvector2D
+from algebra.pointNvector import ObjPoint
 from algebra import Vector
 from algebra import Point
 import conf
+from model3D.zbuffer import ZBuffer
 
 class Camera:
 	pos = None #posotion = Point(x, y, z)
@@ -23,6 +26,7 @@ class Camera:
 	lights = None #a list of the lights presented on the cine
 	display = None #pygame display (width, height)
 	screen = None #pygame surface
+	zBuffer = None #zBuffer
 
 	def __init__(self, model, lights):
 		self.mdl = model
@@ -74,6 +78,7 @@ class Camera:
 	def set(self, width, height):
 		self.display = (800, 600)
 		self.screen = pygame.display.set_mode(self.display)
+		self.zBuffer = ZBuffer(800, 600)
 
 	def orthogonalize(self):
 		###
@@ -115,57 +120,70 @@ class Camera:
 
 			t = 0
 			while t <= 1:
-				#2D Points
-				tp2d0 = t*p2d0
-				p2da = tp2d0 + (1 - t)*p2d1 #baricentric
-				p2db = tp2d0 + (1 - t)*p2d2
-
-				#3D Points
-				tp3d0 = t*p3d0
-				p3da = tp3d0 + (1 - t)*p3d1
-				p3db = tp3d0 + (1 - t)*p3d2
-
-				#Normals
-				tn0 = t*n0
-				na = tn0 + (1 - t)*n1
-				nb = tn0 + (1 - t)*n2
-
+				tp0 = t*p2d0
+				pa = tp0 + (1 - t)*p2d1
+				pb = tp0 + (1 - t)*p2d2
 				s = 0
 				while s <= 1:
-					point2d = s*p2da + (1 - s)*p2db
-					point3d = s*p3da + (1 - s)*p3db
-					point3d.N = s*na + (1 - s)*nb
-					point3d.N.normalize()
+					point = s*pa + (1 - s)*pb
 
-					#geeting phong
-					vl = Vector(0, 0, 0) #vector light
-					for light in self.lights:
-						vl = vl + light.phong(point3d, self.pos)
+					alpha, beta, gama = self.baricentrica(p2d0, p2d1, p2d2, point)
 
-					vl = vl + self.lights[0].get_ambiental_color()
+					p03D = self.mdl.vertices[triangle[0]]
+					p13D = self.mdl.vertices[triangle[1]]
+					p23D = self.mdl.vertices[triangle[2]]
+					point3D = (p03D * alpha) + (p13D * beta) + (p23D * gama)
+					point3D.N = (p03D.N * alpha) + (p13D.N * beta) + (p23D.N * gama)
+					if(self.zBuffer.compare_and_set(int(point.x), int(point.y), point3D.z)):
+						#geeting phong
+						vl = Vector(0, 0, 0) #vector light
+						for light in self.lights:
+							vl = vl + light.phong(point3D, self.pos)
 
-					#light ceil
-					#R
-					if vl.x > 255:
-						vl.x = 255
-					elif vl.x < 0:
-						vl.x = 0
+						vl = vl + self.lights[0].get_ambiental_color()
 
-					#G
-					if vl.y > 255:
-						vl.y = 255
-					elif vl.y < 0:
-						vl.y = 0
+						#light ceil
+						#R
+						if vl.x > 255:
+							vl.x = 255
+						elif vl.x < 0:
+							vl.x = 0
 
-					#B
-					if vl.z > 255:
-						vl.z = 255
-					elif vl.z < 0:
-						vl.z = 0
+						#G
+						if vl.y > 255:
+							vl.y = 255
+						elif vl.y < 0:
+							vl.y = 0
 
-					self.screen.set_at((int(point2d.x), int(point2d.y)), Color(int(vl.x), int(vl.y), int(vl.z), 0))
+						#B
+						if vl.z > 255:
+							vl.z = 255
+						elif vl.z < 0:
+							vl.z = 0
+						self.screen.set_at((int(point.x), int(point.y)), Color(int(vl.x), int(vl.y), int(vl.z), 0))
 					s += 0.1
 				t += 0.1
+
+	def triangleArea(self, v1, v2, v3):
+		a = math.hypot((v1.x - v2.x), (v1.y - v2.y))
+		b = math.hypot((v2.x - v3.x), (v2.y - v3.y))
+		c = math.hypot((v1.x - v3.x), (v1.y - v3.y))
+		S = (a+b+c)/2
+		A = abs(S - a)
+		B = abs(S - b)
+		C = abs(S - c)
+
+		return math.sqrt(S * A * B * C)
+
+	def baricentrica(self, P1, P2, P3, P):
+
+		value = self.triangleArea(P1, P2, P3)
+		if value == 0:
+			return P1.x / P.x, 0, 0
+		alpha = self.triangleArea(P, P2, P3) / value
+		beta = self.triangleArea(P1, P, P3) / value
+		gama = self.triangleArea(P1, P2, P) / value
+		return alpha, beta, gama
 
 	#debugging methods
 	def print(self):
