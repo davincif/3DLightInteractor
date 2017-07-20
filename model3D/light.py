@@ -51,7 +51,7 @@ class Light():
 
 		Vd = Vector(-campoint.x, -campoint.y, -campoint.z)  #viewer direction,the vector from the point toward the camera
 		Vd.normalize()
-		
+
 		N = self.normalPointInversion(point)
 		NdotLs = point.N.dotProd(Ls)
 		if (NdotLs < 0):
@@ -61,9 +61,9 @@ class Light():
 			Rm.normalize()
 			RprodV = Rm.dotProd(Vd)
 			if (RprodV < 0):
-				return N.dotProd(Vd) * self.kd * (self.Od*self.Il)
+				return N.dotProd(Ls) * self.kd * (self.Od*self.Il)
 			else:
-				return N.dotProd(Vd) * self.kd * (self.Od*self.Il) + RprodV **self.n * self.ks*self.Il
+				return N.dotProd(Ls) * self.kd * (self.Od*self.Il) + RprodV **self.n * self.ks*self.Il
 
 	def get_ambiental_color(self):
 	###
