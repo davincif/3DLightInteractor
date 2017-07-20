@@ -21,9 +21,9 @@ def init():
 	global show
 	global settings
 
-	camera = "camera.cfg"
+	camera = "camaro.cfg"
 	illumination = "iluminacao.txt"
-	objects = "objeto.byu"
+	objects = "camaro.byu"
 	show = "settings"
 	settings = {}
 

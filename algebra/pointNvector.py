@@ -119,9 +119,12 @@ class Vector:
 
 	def normalize(self):
 		module = math.sqrt(self.x**2 + self.y**2 + self.z**2)
-		self.x = self.x / module
-		self.y = self.y / module
-		self.z = self.z / module
+		try:
+			self.x = self.x / module
+			self.y = self.y / module
+			self.z = self.z / module
+		except ZeroDivisionError:
+			pass
 
 	def dotProd(self, other):
 	###

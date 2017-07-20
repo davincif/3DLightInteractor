@@ -63,7 +63,11 @@ class Light():
 			if (RprodV < 0):
 				return N.dotProd(Ls) * self.kd * (self.Od*self.Il)
 			else:
+<<<<<<< HEAD
 				return N.dotProd(Ls) * self.kd * (self.Od*self.Il) + RprodV **self.n * self.ks*self.Il
+=======
+				return N.dotProd(Ls) * self.kd * (self.Od*self.Il) + (RprodV**self.n) * self.ks * self.Il
+>>>>>>> Fixed a bug in normalize method and added camaro files.
 
 	def get_ambiental_color(self):
 	###
