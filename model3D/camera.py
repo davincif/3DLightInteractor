@@ -138,42 +138,45 @@ class Camera:
 				while s <= 1:
 					point = s*pa + (1 - s)*pb
 
-					alpha, beta, gama = self.baricentrica(p2d0, p2d1, p2d2, point)
-
-					p03D = self.mdl.vertices[triangle[0]]
-					p13D = self.mdl.vertices[triangle[1]]
-					p23D = self.mdl.vertices[triangle[2]]
-					point3D = (p03D * alpha) + (p13D * beta) + (p23D * gama)
-					point3D.N = (p03D.N * alpha) + (p13D.N * beta) + (p23D.N * gama)
-					if(self.zBuffer.compare_and_set(int(point.x), int(point.y), point3D.z)):
-						#geeting phong
-						vl = Vector(0, 0, 0) #vector light
-						for light in self.lights:
-							vl = vl + light.phong(point3D, self.pos)
-
-						vl = vl + self.lights[0].get_ambiental_color()
-
-						#light ceil
-						#R
-						if vl.x > 255:
-							vl.x = 255
-						elif vl.x < 0:
-							vl.x = 0
-
-						#G
-						if vl.y > 255:
-							vl.y = 255
-						elif vl.y < 0:
-							vl.y = 0
-
-						#B
-						if vl.z > 255:
-							vl.z = 255
-						elif vl.z < 0:
-							vl.z = 0
-						self.screen.set_at((int(point.x), int(point.y)), Color(int(vl.x), int(vl.y), int(vl.z), 0))
+					self.func(p2d0, p2d1, p2d2, point, triangle)
 					s += sup
 				t += tup
+
+	def func(self, p2d0, p2d1, p2d2, point, triangle):
+		alpha, beta, gama = self.baricentrica(p2d0, p2d1, p2d2, point)
+
+		p03D = self.mdl.vertices[triangle[0]]
+		p13D = self.mdl.vertices[triangle[1]]
+		p23D = self.mdl.vertices[triangle[2]]
+		point3D = (p03D * alpha) + (p13D * beta) + (p23D * gama)
+		point3D.N = (p03D.N * alpha) + (p13D.N * beta) + (p23D.N * gama)
+		if(self.zBuffer.compare_and_set(int(point.x), int(point.y), point3D.z)):
+			#geeting phong
+			vl = Vector(0, 0, 0) #vector light
+			for light in self.lights:
+				vl = vl + light.phong(point3D, self.pos)
+
+			vl = vl + self.lights[0].get_ambiental_color()
+
+			#light ceil
+			#R
+			if vl.x > 255:
+				vl.x = 255
+			elif vl.x < 0:
+				vl.x = 0
+
+			#G
+			if vl.y > 255:
+				vl.y = 255
+			elif vl.y < 0:
+				vl.y = 0
+
+			#B
+			if vl.z > 255:
+				vl.z = 255
+			elif vl.z < 0:
+				vl.z = 0
+			self.screen.set_at((int(point.x), int(point.y)), Color(int(vl.x), int(vl.y), int(vl.z), 0))
 
 	def triangleArea(self, v1, v2, v3):
 		a = math.hypot((v1.x - v2.x), (v1.y - v2.y))
