@@ -118,12 +118,23 @@ class Camera:
 			n1 = p3d1.N
 			n2 = p3d2.N
 
-			t = 0
+			tup = max((p2d0 - p2d1).module(), (p2d0 - p2d2).module())
+			if tup != 0:
+				tup = 1 / tup
+				t = tup
+			elif tup == 0:
+				t = 2
 			while t <= 1:
 				tp0 = t*p2d0
 				pa = tp0 + (1 - t)*p2d1
 				pb = tp0 + (1 - t)*p2d2
-				s = 0
+
+				sup = (pa - pb).module()
+				if sup != 0:
+					sup = 1 / sup
+					s = sup
+				elif sup == 0:
+					s = 2
 				while s <= 1:
 					point = s*pa + (1 - s)*pb
 
@@ -161,8 +172,8 @@ class Camera:
 						elif vl.z < 0:
 							vl.z = 0
 						self.screen.set_at((int(point.x), int(point.y)), Color(int(vl.x), int(vl.y), int(vl.z), 0))
-					s += 0.1
-				t += 0.1
+					s += sup
+				t += tup
 
 	def triangleArea(self, v1, v2, v3):
 		a = math.hypot((v1.x - v2.x), (v1.y - v2.y))
