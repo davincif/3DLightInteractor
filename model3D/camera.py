@@ -141,6 +141,7 @@ class Camera:
 					vl = Vector(0, 0, 0) #vector light
 					for light in self.lights:
 						vl = vl + light.phong(point3d, self.pos)
+
 					vl = vl + self.lights[0].get_ambiental_color()
 
 					#light ceil
@@ -165,13 +166,6 @@ class Camera:
 					self.screen.set_at((int(point2d.x), int(point2d.y)), Color(int(vl.x), int(vl.y), int(vl.z), 0))
 					s += 0.1
 				t += 0.1
-
-	def normalPointInversion(pos3D, N):
-		aux = -pos3D.x * N.x + -pos3D.y * N.y + -pos3D.z * N.z
-		if (aux < 0):
-			return -N
-		else:
-			return N
 
 	#debugging methods
 	def print(self):
