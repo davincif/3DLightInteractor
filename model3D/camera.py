@@ -123,7 +123,8 @@ class Camera:
 				tup = 1 / tup
 				t = tup
 			elif tup == 0:
-				t = 2
+				t = 1
+				tup = 1
 			while t <= 1:
 				tp0 = t*p2d0
 				pa = tp0 + (1 - t)*p2d1
@@ -134,13 +135,15 @@ class Camera:
 					sup = 1 / sup
 					s = sup
 				elif sup == 0:
-					s = 2
+					s = 1
+					sup = 1
 				while s <= 1:
 					point = s*pa + (1 - s)*pb
-
 					self.func(p2d0, p2d1, p2d2, point, triangle)
 					s += sup
+				self.func(p2d0, p2d1, p2d2, pa, triangle)
 				t += tup
+			self.func(p2d0, p2d1, p2d2, p2d0, triangle)
 
 	def func(self, p2d0, p2d1, p2d2, point, triangle):
 		alpha, beta, gama = self.baricentrica(p2d0, p2d1, p2d2, point)
