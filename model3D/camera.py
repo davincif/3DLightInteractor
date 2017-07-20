@@ -124,7 +124,7 @@ class Camera:
 				t = tup
 			elif tup == 0:
 				t = 2
-			while t <= 1:
+			while t - 1 < 0.000001:
 				tp0 = t*p2d0
 				pa = tp0 + (1 - t)*p2d1
 				pb = tp0 + (1 - t)*p2d2
@@ -135,14 +135,15 @@ class Camera:
 					s = sup
 				elif sup == 0:
 					s = 2
-				while s <= 1:
+				while s - 1 < 0.000001:
 					point = s*pa + (1 - s)*pb
 
-					self.func(p2d0, p2d1, p2d2, point, triangle)
+					self.rast_aux(p2d0, p2d1, p2d2, point, triangle)
 					s += sup
+				self.rast_aux(p2d0, p2d1, p2d2, pa, triangle)
 				t += tup
 
-	def func(self, p2d0, p2d1, p2d2, point, triangle):
+	def rast_aux(self, p2d0, p2d1, p2d2, point, triangle):
 		alpha, beta, gama = self.baricentrica(p2d0, p2d1, p2d2, point)
 
 		p03D = self.mdl.vertices[triangle[0]]
