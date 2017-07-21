@@ -6,16 +6,25 @@ class ZBuffer:
         self.matrix = [[inf]*width for _ in range(height)]
 
     def read_z(self, x, y):
-        return self.matrix[y][x]
+        try:
+            return self.matrix[y][x]
+        except:
+            return -1
 
     def set_z(self, x, y, z):
-        self.matrix[y][x] = z
+        try:
+            self.matrix[y][x] = z
+        except:
+            pass
 
     def compare(self, px, py, pz):
         return True if pz < self.read_z(px, py) else False
 
     def compare_and_set(self, px, py, pz):
-        if pz < self.read_z(px, py):
+        z_value = self.read_z(px, py)
+        if z_value == -1:
+            return False
+        elif pz < z_value:
             self.set_z(px, py, pz)
             return True
         else:
