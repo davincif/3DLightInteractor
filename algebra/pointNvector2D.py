@@ -14,25 +14,16 @@ class Point2D:
 		return "p (" + str(self.x) + ", " + str(self.y) + ")"
 
 	def __sub__(self, other):
-		if isinstance(other, Point2D):
-			return Vector2D(self.x - other.x, self.y - other.y)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Vector2D(self.x - other.x, self.y - other.y)
 
 	def __add__(self, other):
-		if isinstance(other, Point2D):
-			return Point2D(self.x + other.x, self.y + other.y)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Point2D(self.x + other.x, self.y + other.y)
 
 	def __radd__(self, other):
 		return self.__mul__(other)
 
 	def __mul__(self, other):
-		if isinstance(other, numbers.Number):
-			return Point2D(self.x * other, self.y * other)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Point2D(self.x * other, self.y * other)
 
 	def __rmul__(self, other):
 		return self.__mul__(other)
@@ -50,43 +41,28 @@ class Vector2D:
 		return "v (" + str(self.x) + ", " + str(self.y) + ", " + ")"
 
 	def __sub__(self, other):
-		if type(other) is Vector2D:
-			return Vector2D(self.x - other.x, self.y - other.y)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
+		return Vector2D(self.x - other.x, self.y - other.y)
 
 	def __rsub__(self, other):
 		return self.__sub__(other)
 
 	def __add__(self, other):
-		if type(other) is Vector2D:
-			return Vector2D(self.x + other.x, self.y + other.y)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
+		return Vector2D(self.x + other.x, self.y + other.y)
 
 	def __radd__(self, other):
 		return self.__add__(other)
 
 	def __mul__(self, other):
-		if isinstance(other, numbers.Number):
-			return Vector2D(self.x * other, self.y * other)
-		else:
-			raise Exception("cannot multiply " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
+		return Vector2D(self.x * other, self.y * other)
 
 	def __rmul__(self, other):
 		return self.__mul__(other)
 
 	def __truediv__(self, other):
-		if isinstance(other, numbers.Number):
-			return Vector2D(self.x / other, self.y / other)
-		else:
-			raise Exception("cannot divide " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Vector2D(self.x / other, self.y / other)
 
 	def __pow__(self, other):
-		if isinstance(other, numbers.Number):
-			return Vector2D(self.x**other, self.y**other)
-		else:
-			raise Exception("cannot pow " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Vector2D(self.x**other, self.y**other)
 
 	def __neg__(self):
 		self.x = -self.x

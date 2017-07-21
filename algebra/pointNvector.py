@@ -16,25 +16,16 @@ class Point:
 		return "p (" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ")"
 
 	def __sub__(self, other):
-		if isinstance(other, Point):
-			return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
 
 	def __add__(self, other):
-		if isinstance(other, Point):
-			return Point(self.x + other.x, self.y + other.y, self.z + other.z)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Point(self.x + other.x, self.y + other.y, self.z + other.z)
 
 	def __radd__(self, other):
 		return self.__mul__(other)
 
 	def __mul__(self, other):
-		if isinstance(other, numbers.Number):
-			return Point(self.x * other, self.y * other, self.z * other)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Point(self.x * other, self.y * other, self.z * other)
 
 	def __rmul__(self, other):
 		return self.__mul__(other)
@@ -70,17 +61,12 @@ class Vector:
 			return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
 		elif isinstance(other, numbers.Number):
 			return Vector(self.x - other, self.y - other, self.z - other)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
 
 	def __rsub__(self, other):
 		return self.__sub__(other)
 
 	def __add__(self, other):
-		if type(other) is Vector:
-			return Vector(self.x + other.x, self.y + other.y, self.z + other.z)
-		else:
-			raise Exception("cannot subtract " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
+		return Vector(self.x + other.x, self.y + other.y, self.z + other.z)
 
 	def __radd__(self, other):
 		return self.__add__(other)
@@ -90,23 +76,15 @@ class Vector:
 			return Vector(self.x * other, self.y * other, self.z * other)
 		elif type(other) is Vector:
 			return Vector(self.x * other.x, self.y * other.y, self.z * other.z)
-		else:
-			raise Exception("cannot multiply " + str(type(self)) + " by " + str(type(other)) + ", vise versa.")
 
 	def __rmul__(self, other):
 		return self.__mul__(other)
 
 	def __truediv__(self, other):
-		if isinstance(other, numbers.Number):
-			return Vector(self.x / other, self.y / other, self.z / other)
-		else:
-			raise Exception("cannot divide " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Vector(self.x / other, self.y / other, self.z / other)
 
 	def __pow__(self, other):
-		if isinstance(other, numbers.Number):
-			return Vector(self.x**other, self.y**other, self.z**other)
-		else:
-			raise Exception("cannot pow " + str(type(self)) + " by " + str(type(other)) + ".")
+		return Vector(self.x**other, self.y**other, self.z**other)
 
 	def __neg__(self):
 		self.x = -self.x
