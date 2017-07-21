@@ -117,11 +117,10 @@ class Camera:
 			n0 = p3d0.N
 			n1 = p3d1.N
 			n2 = p3d2.N
-
 			tup = max((p2d0 - p2d1).module(), (p2d0 - p2d2).module())
 			if tup != 0:
 				tup = 1 / tup
-				t = tup
+				t = 0
 			elif tup == 0:
 				t = 1
 				tup = 1
@@ -133,7 +132,7 @@ class Camera:
 				sup = (pa - pb).module()
 				if sup != 0:
 					sup = 1 / sup
-					s = sup
+					s = 0
 				elif sup == 0:
 					s = 1
 					sup = 1
@@ -141,7 +140,6 @@ class Camera:
 					point = s*pa + (1 - s)*pb
 					self.func(p2d0, p2d1, p2d2, point, triangle)
 					s += sup
-				self.func(p2d0, p2d1, p2d2, pa, triangle)
 				t += tup
 			self.func(p2d0, p2d1, p2d2, p2d0, triangle)
 
