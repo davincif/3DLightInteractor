@@ -138,12 +138,13 @@ class Camera:
 					sup = 1
 				while s <= 1:
 					point = s*pa + (1 - s)*pb
-					self.func(p2d0, p2d1, p2d2, point, triangle)
+					self.rast_aux(p2d0, p2d1, p2d2, point, triangle)
 					s += sup
+				self.rast_aux(p2d0, p2d1, p2d2, pa, triangle)
 				t += tup
-			self.func(p2d0, p2d1, p2d2, p2d0, triangle)
+			self.rast_aux(p2d0, p2d1, p2d2, p2d0, triangle)
 
-	def func(self, p2d0, p2d1, p2d2, point, triangle):
+	def rast_aux(self, p2d0, p2d1, p2d2, point, triangle):
 		alpha, beta, gama = self.baricentrica(p2d0, p2d1, p2d2, point)
 
 		p03D = self.mdl.vertices[triangle[0]]
